@@ -10,6 +10,7 @@ String HTML = "<!DOCTYPE html>\
 <html>\
 <body>\
 <h1>My First Web Server with ESP32 - Station Mode &#128522;</h1>\
+<script>setTimeout(()=>{window.location.reload(1)},500);</script>\
 </body>\
 </html>";
 
@@ -39,6 +40,9 @@ float distanceCm2;
 float distanceCm3;
 float distanceCm4;
 float distanceCm5;
+
+bool front=false,left=false,right=false,back=false;
+String down="plane"; 
 
 float height=170;
 String data="Deafult text";
@@ -123,22 +127,6 @@ digitalWrite(trigPin5, LOW);
 duration5 = pulseIn(echoPin5, HIGH);
 distanceCm5 = duration5 * SOUND_VELOCITY/2;
 
-Serial.print("device1 distance :");
-Serial.println(distanceCm1);
-Serial.print("device2 distance :");
-Serial.println(distanceCm2);
-Serial.print("device3 distance :");
-Serial.println(distanceCm3);
-Serial.print("device4 distance :");
-Serial.println(distanceCm4);
-Serial.print("device5 distance :");
-Serial.println(distanceCm5);
-
-    //for checking distance 
-bool front=false,left=false,right=false,back=false;
-
-String down="plane";    //  value can be : upstair,downstair,pit,wall,plane
-
 // checking surounding area
     if(distanceCm2<=150 )
     {
@@ -194,19 +182,31 @@ String down="plane";    //  value can be : upstair,downstair,pit,wall,plane
     }
 
 ///we have to send front,left,right,back,and down 
-
-   Serial.println("down"+down+" front"+front+" Left"+left+" right"+right+" back"+back); 
 Serial.println("_________");
 String comma=",";
  data=front+comma+left+comma+right+comma+back+comma+down;
  HTML = "<!DOCTYPE html>\
 <html>\
 <body>\
-<h1>My First Web Server with ESP32 - Station Mode &#128522;</h1>\
+<h1>HI this is server;</h1>\
 <input type=\"text\" value=\""+data+"\">\
 <p>"+data+"</p>\
+<script>setTimeout(()=>{window.location.reload(1)},500);</script>\
 </body>\
 </html>";
+
+
+   Serial.println("down:"+down+" front:"+front+" Left:"+left+" right:"+right+" back:"+back); 
+Serial.print("device1 distance :");
+Serial.println(distanceCm1);
+Serial.print("device2 distance :");
+Serial.println(distanceCm2);
+Serial.print("device3 distance :");
+Serial.println(distanceCm3);
+Serial.print("device4 distance :");
+Serial.println(distanceCm4);
+Serial.print("device5 distance :");
+Serial.println(distanceCm5);
 }
 
 void handle_root() {
